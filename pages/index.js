@@ -1,6 +1,17 @@
 import Head from 'next/head'
+import { useState } from 'react'
 
 export default function Home() {
+
+  const [cookieStand, setCookieStand] = useState("")
+
+  function formHandler(event){
+    event.preventDefault();
+
+    const formData = new FormData(event.target)
+    const cookieStand = JSON.stringify(Object.fromEntries(formData))
+    setCookieStand(cookieStand);
+  }
   return (
     <div className="">
       <Head>
@@ -13,7 +24,7 @@ export default function Home() {
       </header>
 
       <main className="">
-        <form className="flex w-3/4 justify-self-center flex-col m-52 text-center my-6 bg-green-300 rounded-md p-4">
+        <form name="formData" onSubmit={formHandler} className="flex w-3/4 justify-self-center flex-col m-52 text-center my-6 bg-green-300 rounded-md p-4">
           <div className="my-2">
             <h2>Create Cookie Stand</h2>
           </div>
@@ -41,10 +52,11 @@ export default function Home() {
         <p className="pb-1 text-center pl-4 text-xs text-gray-600">
           Report Table Coming Soon...
 
-          <pre>{`
+          {/* <pre>{`
           {"location":"Barcelona","minCustomers":2,"maxCustomers":4,"avgCookies":2.5}
-          `}</pre>
+          `}</pre> */}
         </p>
+        <p className="pb-1 text-center pl-4 text-xs text-gray-600">{cookieStand}</p>
       </main>
 
       <footer className="bg-green-500 pl-4 text-xs text-gray-600 py-3">
