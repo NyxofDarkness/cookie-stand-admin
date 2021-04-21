@@ -1,34 +1,68 @@
-export default function ReportTable(props){
+import { hours } from '../data'
+
+export default function ReportTable({ stands, onDelete }) {
     return(
-      <table className="w-1/2 mx-auto my-8 bg-green-500 rounded-md">
-          <thead>
-              <tr>
-                  <th>Location</th>
-                  {props.hours_arr.map(hour => (
-                      <th>{hour}</th>
-                  ))}
-                  <th>Totals</th>
-              </tr>
-          </thead>
-          <tbody>
-              {props.ReportTable.map(data => (
-                  <tr className="odd:bg-green-400">
-                      <td className="pl-2 border border-gray-700">{data.location}</td>
-                      {data.hourly_sales.map(sale =>(
-                          <td className="pl-2 border border-gray-700">{sale}</td>
+        <Table className="w-1/2 mx-auto my-8 bg-green-500 rounded-md">
+            <thead>
+                <tr>
+                    <TH>Location</TH>
+                    {hours.map(slot => (
+                        <TH key={slot}>{slot}</TH>
                     ))}
-                      <td className="pl-2 border border-gray-700">{data.hourly_total}</td>
-                  </tr>
-              ))}
-          </tbody>
-          <tfoot>
-              <tr>
-                  <td className="pl-2 font-bold border border-gray-700">Totals</td>
-                        {props.latestTotalSales.map(item =>(
-                            <td className="pl-2 font-bold border border-gray-700">{item}</td>
-                        ))}
-              </tr>
-          </tfoot>
-      </table>
+                    <TH>Totals</TH>
+                </tr>
+            </thead>
+            <tbody>
+                {stands.map((stand, i) => {
+                    return (
+                        <tr key={stand.id} className="odd:bg-green-400">
+                            <TH>
+                                <div>
+                                    <p>{stand.location}</p>
+                                    <span onClick={() => onDelete(stand)}>X</span>
+                                </div>
+                            </TH>
+
+                            {stand.hourlyCookies.map((amt, i) => (
+                                <TD key={i}>
+                                    {amt}
+                                </TD>
+                            ))}
+                            <TD>{stand.latestTotalSales}</TD>
+                        </tr>
+                    )
+                })}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <TH>Totals</TH>
+                    {hours.map((_, i) => {
+                        const amt = stands.reduce((acc, cur) => acc + cur.hourlyCookies[i], 0);
+                        return <TD key={'amt' + i}>{amt}</TD>
+                    })}
+                    <TD>{stands.reduce((acc, cur) => acc + cur.latestTotalSales, 0)}</TD>
+                </tr>
+            </tfoot>
+        </Table>
+    );
+}
+
+function Table({ children }) {
+    return (
+        <table>
+            {children}
+        </table>
     )
-  }
+}
+
+function TH({ children }) {
+    return (
+        <th>{children}</th>
+    )
+}
+
+function TD({ children }) {
+    return (
+        <td>{children}</td>
+    )
+}

@@ -1,7 +1,7 @@
-export default function Footer(props){
+export default function Footer({ report_table }){
     return(
       <footer className="bg-green-500 p-4 flex">
-        <p>{props.reportTable.length} Locations World Wide</p>
+        <p>{props.report_table.length} Locations World Wide</p>
       </footer>
     )
   }

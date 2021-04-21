@@ -3,20 +3,5 @@ import Link from 'next/link'
 
 
 export default function Overview() {
-    return (
-        <>
-         <Head>
-            <title>Overview</title>
-         </Head>
-         <main>
-             {/* <Header>Overview</Header> */}
-            <h2>Something new coming soon...</h2>
-         </main>
-         <h2>
-             <Link href="/">
-                 <a>Back To Home</a>
-             </Link>
-         </h2>
-        </>
-    )
+    return <Link href="/"><a>Return to Main Page</a></Link>
 }
